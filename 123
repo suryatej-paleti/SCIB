@@ -1,0 +1,11 @@
+{
+  "filename": "src/main/java/com/library/controller/BookController.java",
+  "code": "package com.library.controller;\n\nimport com.library.model.Book;\nimport com.library.service.BookService;\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.validation.annotation.Validated;\nimport org.springframework.web.bind.annotation.*;\nimport javax.validation.Valid;\nimport java.util.List;\n\n@RestController\n@RequestMapping(\"/api/books\")\n@Validated\npublic class BookController {\n\n    @Autowired\n    private BookService bookService;\n\n    @GetMapping\n    public ResponseEntity<List<Book>> getAllBooks() {\n        return ResponseEntity.ok(bookService.getAllBooks());\n    }\n\n    @GetMapping(\"/{id}\")\n    public ResponseEntity<Book> getBookById(@PathVariable Long id) {\n        Book book = bookService.getBookById(id);\n        return ResponseEntity.ok(book);\n    }\n\n    @PostMapping\n    public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) {\n        Book createdBook = bookService.createBook(book);\n        return ResponseEntity.ok(createdBook);\n    }\n\n    @PutMapping(\"/{id}\")\n    public ResponseEntity<Book> updateBook(@PathVariable Long id, @Valid @RequestBody Book book) {\n        Book updatedBook = bookService.updateBook(id, book);\n        return ResponseEntity.ok(updatedBook);\n    }\n\n    @DeleteMapping(\"/{id}\")\n    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {\n        bookService.deleteBook(id);\n        return ResponseEntity.nocode().build();\n    }\n}\n",
+  "documentation": "BookController exposes CRUD endpoints for managing books in the library system. All endpoints require authentication. Input validation is enforced for create and update operations.",
+  "metadata": {
+    "author": "Code Generation Agent",
+    "created": "2024-06-10",
+    "layer": "controller",
+    "security": "Requires authentication"
+  }
+}
